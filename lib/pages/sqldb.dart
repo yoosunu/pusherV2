@@ -23,9 +23,11 @@ class _sqlDBPageState extends State<sqlDBPage> {
   List<List<dynamic>>? _nestedList;
 
   late dynamic codesGet = [];
+  late dynamic tagsGet = [];
   late dynamic titlesGet = [];
-  late dynamic linksGet = [];
-  late dynamic timeStampGet = ["Loading..."];
+  late dynamic fromsGet = [];
+  // late dynamic linksGet = [];
+  // late dynamic timeStampGet = ["Loading..."];
 
   Future<void> _loadData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -35,9 +37,11 @@ class _sqlDBPageState extends State<sqlDBPage> {
       setState(() {
         _nestedList = json.decode(storedData).cast<List<dynamic>>();
         codesGet = _nestedList![0];
-        titlesGet = _nestedList![1];
-        linksGet = _nestedList![2];
-        timeStampGet = _nestedList![3];
+        tagsGet = _nestedList![1];
+        titlesGet = _nestedList![2];
+        fromsGet = _nestedList![3];
+        // linksGet = _nestedList![2];
+        // timeStampGet = _nestedList![3];
       });
     }
   }
@@ -48,78 +52,78 @@ class _sqlDBPageState extends State<sqlDBPage> {
     _loadData();
   }
 
-  void showPopup(BuildContext context, int index) async {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          key: UniqueKey(),
-          title: Center(
-            child: Text(
-              "${titlesGet[index]}",
-              textAlign: TextAlign.justify,
-              style: const TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
-          content: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
-            child: ElevatedButton(
-              onPressed: () async {
-                final Uri url =
-                    Uri.parse('https://www.jbnu.ac.kr/kor/${linksGet[index]}');
-                if (await canLaunchUrl(url)) {
-                  await launchUrl(url);
-                } else {
-                  throw 'Could not launch https://www.jbnu.ac.kr/kor/${linksGet[index]}';
-                }
-              },
-              child: const Text(
-                'Go to site to check!',
-                style: TextStyle(
-                  fontSize: 18,
-                ),
-              ),
-            ),
-          ),
-          actions: [
-            Material(
-              elevation: 2,
-              shadowColor: Colors.black,
-              borderRadius: BorderRadius.circular(25),
-              child: TextButton(
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.white),
-                ),
-                onPressed: () async {
-                  await dbHelper.saveNotification({
-                    DatabaseHelper.secondColumnCode: codesGet[index],
-                    DatabaseHelper.secondColumnTitle: titlesGet[index],
-                    DatabaseHelper.secondColumnLink: linksGet[index],
-                    DatabaseHelper.secondColumnTimeStamp: timeStampGet[index],
-                  });
-                  Navigator.of(context).pop();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: const Text('Notice has been saved'),
-                      action: SnackBarAction(
-                        label: 'OK',
-                        onPressed: () {},
-                      ),
-                    ),
-                  );
-                },
-                child: const Text('Save'),
-              ),
-            )
-          ],
-        );
-      },
-    );
-  }
+  // void showPopup(BuildContext context, int index) async {
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         key: UniqueKey(),
+  //         title: Center(
+  //           child: Text(
+  //             "${titlesGet[index]}",
+  //             textAlign: TextAlign.justify,
+  //             style: const TextStyle(
+  //               fontSize: 17,
+  //               fontWeight: FontWeight.w500,
+  //             ),
+  //           ),
+  //         ),
+  //         content: Padding(
+  //           padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+  //           child: ElevatedButton(
+  //             onPressed: () async {
+  //               final Uri url =
+  //                   Uri.parse('https://www.jbnu.ac.kr/kor/${linksGet[index]}');
+  //               if (await canLaunchUrl(url)) {
+  //                 await launchUrl(url);
+  //               } else {
+  //                 throw 'Could not launch https://www.jbnu.ac.kr/kor/${linksGet[index]}';
+  //               }
+  //             },
+  //             child: const Text(
+  //               'Go to site to check!',
+  //               style: TextStyle(
+  //                 fontSize: 18,
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //         actions: [
+  //           Material(
+  //             elevation: 2,
+  //             shadowColor: Colors.black,
+  //             borderRadius: BorderRadius.circular(25),
+  //             child: TextButton(
+  //               style: ButtonStyle(
+  //                 backgroundColor:
+  //                     MaterialStateProperty.all<Color>(Colors.white),
+  //               ),
+  //               onPressed: () async {
+  //                 await dbHelper.saveNotification({
+  //                   DatabaseHelper.secondColumnCode: codesGet[index],
+  //                   DatabaseHelper.secondColumnTitle: titlesGet[index],
+  //                   DatabaseHelper.secondColumnLink: linksGet[index],
+  //                   // DatabaseHelper.secondColumnTimeStamp: timeStampGet[index],
+  //                 });
+  //                 Navigator.of(context).pop();
+  //                 ScaffoldMessenger.of(context).showSnackBar(
+  //                   SnackBar(
+  //                     content: const Text('Notice has been saved'),
+  //                     action: SnackBarAction(
+  //                       label: 'OK',
+  //                       onPressed: () {},
+  //                     ),
+  //                   ),
+  //                 );
+  //               },
+  //               child: const Text('Save'),
+  //             ),
+  //           )
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -160,9 +164,9 @@ class _sqlDBPageState extends State<sqlDBPage> {
                     backgroundColor: Colors.purple[50],
                   ),
                   onPressed: () {},
-                  child: Text(
-                    "Updated:   ${timeStampGet[0]}",
-                    style: const TextStyle(
+                  child: const Text(
+                    "JBNU",
+                    style: TextStyle(
                       fontSize: 22,
                     ),
                   ),
@@ -186,7 +190,7 @@ class _sqlDBPageState extends State<sqlDBPage> {
                           alignment: Alignment.center,
                         ),
                         onPressed: () {
-                          showPopup(context, index);
+                          // showPopup(context, index);
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,

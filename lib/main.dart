@@ -77,12 +77,13 @@ void main() async {
   FlutterLocalNotification.requestNotificationPermission();
 
   // workmanager section
-  Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
-  Workmanager().registerPeriodicTask(
-    "periodicTask",
-    "simplePeriodicTask",
-    frequency: const Duration(minutes: 2),
-  );
+  // Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
+  // Workmanager().registerPeriodicTask(
+  //   "periodicTask",
+  //   "simplePeriodicTask",
+  //   frequency: const Duration(minutes: 2),
+  // );
+  _saveData();
 
   runApp(const MyApp());
 }

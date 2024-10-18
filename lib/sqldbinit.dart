@@ -11,7 +11,10 @@ class DatabaseHelper {
   static const String tableName = 'info';
 
   static const String columnCode = 'code';
+  static const String columnTag = 'tag';
   static const String columnTitle = 'title';
+  static const String columnSource = 'source';
+  static const String columnEtc = 'etc';
   static const String columnLink = 'link';
   static const String columnTimeStamp = 'timeStamp';
 
@@ -19,7 +22,10 @@ class DatabaseHelper {
   static const String secondTableName = 'save';
 
   static const String secondColumnCode = 'codeSaved';
+  static const String secondColumnTag = 'tagSaved';
   static const String secondColumnTitle = 'titleSaved';
+  static const String secondColumnSource = 'sourceSaved';
+  static const String secondColumnEtc = 'etcSaved';
   static const String secondColumnLink = 'linkSaved';
   static const String secondColumnTimeStamp = 'timeStampSaved';
 
@@ -39,12 +45,15 @@ class DatabaseHelper {
     String path = join(await getDatabasesPath(), 'info.db');
     return await openDatabase(
       path,
-      version: 2,
+      version: 3,
       onCreate: (Database db, int version) async {
         await db.execute('''
           CREATE TABLE IF NOT EXISTS $tableName(
             $columnCode INTEGER,
+            $columnTag TEXT,
             $columnTitle TEXT,
+            $columnSource TEXT,
+            $columnEtc TEXT,
             $columnLink TEXT,
             $columnTimeStamp TEXT
           )
@@ -52,7 +61,10 @@ class DatabaseHelper {
         await db.execute('''
           CREATE TABLE IF NOT EXISTS $secondTableName(
             $secondColumnCode INTEGER,
+            $secondColumnTag TEXT,
             $secondColumnTitle TEXT,
+            $secondColumnSource TEXT,
+            $secondColumnEtc TEXT,
             $secondColumnLink TEXT,
             $secondColumnTimeStamp TEXT
           )
@@ -62,7 +74,10 @@ class DatabaseHelper {
         await db.execute('''
           CREATE TABLE IF NOT EXISTS $secondTableName(
             $secondColumnCode INTEGER,
+            $secondColumnTag TEXT,
             $secondColumnTitle TEXT,
+            $secondColumnSource TEXT,
+            $secondColumnEtc TEXT,
             $secondColumnLink TEXT,
             $secondColumnTimeStamp TEXT
           )
@@ -79,7 +94,10 @@ class DatabaseHelper {
     await db.execute('''
       CREATE TABLE $tableName(
         $columnCode INTEGER,
+        $columnTag TEXT,
         $columnTitle TEXT,
+        $columnSource TEXT,
+        $columnEtc TEXT,
         $columnLink TEXT,
         $columnTimeStamp TEXT
       )
@@ -94,7 +112,10 @@ class DatabaseHelper {
     await db.execute('''
       CREATE TABLE $secondTableName(
         $secondColumnCode INTEGER,
+        $secondColumnTag TEXT,
         $secondColumnTitle TEXT,
+        $secondColumnSource TEXT,
+        $secondColumnEtc TEXT,
         $secondColumnLink TEXT,
         $secondColumnTimeStamp TEXT
       )

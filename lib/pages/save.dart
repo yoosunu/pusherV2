@@ -76,7 +76,7 @@ class _PusherPageState extends State<PusherPage> {
                       var dateTime = DateTime.tryParse(
                           item[DatabaseHelper.secondColumnTimeStamp]);
                       var formattedDate = dateTime != null
-                          ? DateFormat('yyyy-MM-dd – kk:mm').format(dateTime)
+                          ? DateFormat('yyyy-MM-dd-kk:mm').format(dateTime)
                           : 'Invalid Date';
                       return Container(
                         color: Colors.deepPurple[50],
@@ -88,7 +88,7 @@ class _PusherPageState extends State<PusherPage> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return SizedBox(
-                                      height: 200,
+                                      height: 300,
                                       child: Column(
                                         children: <Widget>[
                                           ListTile(
@@ -109,13 +109,24 @@ class _PusherPageState extends State<PusherPage> {
                                             },
                                           ),
                                           ListTile(
+                                            leading: const Icon(Icons.menu),
+                                            title: Text(
+                                                '${item[DatabaseHelper.secondColumnTag]} / ${item[DatabaseHelper.secondColumnSource]}'),
+                                          ),
+                                          ListTile(
+                                            leading:
+                                                const Icon(Icons.more_time),
+                                            title:
+                                                Text('Saved: $formattedDate'),
+                                          ),
+                                          ListTile(
                                             leading:
                                                 const Icon(Icons.open_in_new),
                                             title: const Text('Go to site'),
                                             onTap: () async {
                                               Navigator.of(context).pop();
                                               final Uri url = Uri.parse(
-                                                  'https://www.jbnu.ac.kr/kor/${item[DatabaseHelper.secondColumnLink]}');
+                                                  'https://www.jbnu.ac.kr/web/Board/${item[DatabaseHelper.secondColumnLink]}/detailView.do?pageIndex=1&menu=2377');
                                               if (await canLaunchUrl(url)) {
                                                 await launchUrl(url);
                                               }
@@ -172,15 +183,13 @@ class _PusherPageState extends State<PusherPage> {
                                       ),
                                       const SizedBox(width: 15),
                                       Text(
-                                        'Saved: $formattedDate',
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
+                                          'Date: ${item[DatabaseHelper.secondColumnEtc]}'),
                                     ],
                                   ),
                                   trailing: ElevatedButton(
                                     onPressed: () async {
                                       final Uri url = Uri.parse(
-                                          'https://www.jbnu.ac.kr/kor/${item[DatabaseHelper.secondColumnLink]}');
+                                          'https://www.jbnu.ac.kr/web/Board/${item[DatabaseHelper.secondColumnLink]}/detailView.do?pageIndex=1&menu=2377');
                                       if (await canLaunchUrl(url)) {
                                         await launchUrl(url);
                                       }

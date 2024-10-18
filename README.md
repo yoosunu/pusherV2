@@ -1,3 +1,5 @@
+# I updated this app from v1 to v2 according to the change of the JBNU homepaged.
+
 # pusher => An alarming application for Android.
 
 A simple application sending push alarm when new notifications added and can save notifications.
